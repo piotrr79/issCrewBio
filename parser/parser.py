@@ -2,34 +2,28 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 class BaseParser:
-    def __init__(self, url, element, class, needle, soupObject, attribute):
+    def __init__(self, url):
         self.url = url
-        self.element = element
-        self.class = class
-        self.needle = needle
-        self.soupObject = soupObject
-        self.attribute = attribute
 
-    def getContent(self.url):
-        page = urlopen(self.url)
+    def getContent(url):
+        page = urlopen(url)
         html_bytes = page.read()
-        html = html_bytes.decode("utf-8")
-        return html
+        return html_bytes.decode("utf-8")
 
-    def getSoup():
+    def getSoup(self):
         return BeautifulSoup(self.getContent(), "html.parser")
 
-    '''def getElement(self.element):
-        return self.getSoup().findAll(element, {"class": ""})'''
+    def getElement(element):
+        return self.getSoup().findAll(element, {"class": ""})
 
-    def getElementByClass(self.element, self.class):
-        return self.getSoup().findAll(element, {"class": class})
+    def getElementByClass(self, element, classname):
+        return self.getSoup().findAll(element, {"class": classname})
 
-    def findInString(self.needle):
-        return = str(self.getElement()).find(self.needle)
+    def findInString(element, needle):
+        return str(element).find(needle)
 
-    def getText():
-        return = self.getElement().get_text()
+    def getText(element):
+        return element.get_text()
 
-    def getAttribute(self.attribute):
-        return = self.getElement().get(attribute)
+    def getAttribute(element, attribute):
+        return element.get(attribute)

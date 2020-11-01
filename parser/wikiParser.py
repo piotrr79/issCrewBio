@@ -1,19 +1,28 @@
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 from parser import BaseParser
 
-class WikiParser(Parser):
-    def __init__(self, url, element, class, needle, soupObject, attribute):
-        super().__init__(url, element, class, needle, soupObject, attribute)
+class WikiParser(BaseParser):
+    def __init__(self, url):
+        #super().__init__(url)
+        #super(BaseParser, self).__init__(url)
+        #pass
+        #super(BaseParser, self).__init__(url)
+        super().__init__(url)
 
-    def getLinks():
+    def getLinks(self, element, classname, needle, subelement, attribute):
+        response = []
+        elements = self.getElementByClass(element, classname)
+        for idx, element in enumerate(elements):
+            check = self.findInString(needle)
+            if check != -1:
+                subelements = self.getElement(element)
+                subresponse = []
+                for subelement in subelements:
+                    result = self.getAttribute(attribute)
+                    subresponse.append(result)
+            response[idx].append(subresponse)
 
+        return response
 
-    mylis = soup.findAll("li", {"class": ""})
-    for myli in mylis:
-        astr = str(myli).find('<span class="flagicon">')
-        if astr != -1:
-            links = myli.findAll("a", {"class": ""})
-            for link in links:
-                title = link.get('title')
-                print(title)
+x = WikiParser('https://en.wikipedia.org/wiki/List_of_astronauts_by_name')
+res = x.getLinks('li', '', '<span class="flagicon">', 'a', 'title')
+print(res)
