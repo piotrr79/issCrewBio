@@ -2,10 +2,6 @@ from parser import BaseParser
 
 class WikiParser(BaseParser):
     def __init__(self, url):
-        #super().__init__(url)
-        #super(BaseParser, self).__init__(url)
-        #pass
-        #super(BaseParser, self).__init__(url)
         super().__init__(url)
 
     def getLinks(self, element, classname, needle, subelement, attribute):
