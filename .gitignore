@@ -1,1 +1,3 @@
-__pycache__
+.sonarlint
+parser/__pycache__
+parser/.sonarlint
