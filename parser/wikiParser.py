@@ -8,7 +8,7 @@ class WikiParser(BaseParser):
         response = []
         elements = self.getElementByClass(element, classname)
         for idx, element in enumerate(elements):
-            check = self.findInString(needle)
+            check = self.findInString(element, needle)
             if check != -1:
                 subelements = self.getElement(element)
                 subresponse = []
