@@ -4,7 +4,8 @@ class WikiParser(BaseParser):
     def __init__(self, url):
         super().__init__(url)
 
-    def getLinks(self, element, classname, needle, subelement, attribute):
+    def getSubElementsByAttribute(self, element, classname, needle, subelement, attribute):
+        """ Get html subelements of selected html element, get attribute content (title, img, alt, etc) """
         response = []
         items = self.getElementByClass(element, classname)
         for idx, item in enumerate(items):
@@ -20,5 +21,5 @@ class WikiParser(BaseParser):
         return response
 
 x = WikiParser('https://en.wikipedia.org/wiki/List_of_astronauts_by_name')
-res = x.getLinks('li', '', '<span class="flagicon">', 'a', 'title')
+res = x.getSubElementsByAttribute('li', '', '<span class="flagicon">', 'a', 'title')
 print(res)
