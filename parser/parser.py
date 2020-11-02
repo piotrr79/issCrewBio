@@ -13,11 +13,14 @@ class BaseParser:
     def getSoup(self):
         return BeautifulSoup(self.getContent(self.url), "html.parser")
 
-    def getElement(self, element):
-        return self.getSoup().findAll(element, {"class": ""})
+    def getElement(self, htmlelement):
+        return self.getSoup().findAll(htmlelement, {"class": ""})
 
     def getElementByClass(self, element, classname):
         return self.getSoup().findAll(element, {"class": classname})
+
+    def getElementByName(self, soup, htmlelement):
+        return soup.findAll(htmlelement, {"class": ""})
 
     def findInString(self, element, needle):
         return str(element).find(needle)

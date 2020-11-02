@@ -5,23 +5,16 @@ class WikiParser(BaseParser):
         super().__init__(url)
 
     def getLinks(self, element, classname, needle, subelement, attribute):
-        print('starded')
         response = []
-        elements = self.getElementByClass(element, classname)
-        for idx, element in enumerate(elements):
-            print(idx)
-            check = self.findInString(element, needle)
-            print(check)
+        items = self.getElementByClass(element, classname)
+        for idx, item in enumerate(items):
+            check = self.findInString(item, needle)
             if check != -1:
-                subelements = self.getElement(element)
-                print(subelements)
+                subitems = self.getElementByName(item, subelement)
                 subresponse = []
-                for subelement in subelements:
-                    result = self.getAttribute(attribute)
-                    print(result)
+                for idx, subitem in enumerate(subitems):
+                    result = self.getAttribute(subitem, attribute)
                     subresponse.append(result)
-                #response[idx].append(subresponse)
-                print(subresponse)
                 response.append(subresponse)
 
         return response
