@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 class BaseParser:
+    """ Html parses common methods """
     def __init__(self, url):
         self.url = url
 

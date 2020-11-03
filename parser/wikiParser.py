@@ -1,6 +1,7 @@
-from parser import BaseParser
+from parser.mainParser import BaseParser
 
 class WikiParser(BaseParser):
+    """ Wikipedia lists parser """
     def __init__(self, url):
         super().__init__(url)
 
@@ -20,6 +21,6 @@ class WikiParser(BaseParser):
 
         return response
 
-x = WikiParser('https://en.wikipedia.org/wiki/List_of_astronauts_by_name')
-res = x.getSubElementsByAttribute('li', '', '<span class="flagicon">', 'a', 'title')
-print(res)
+#x = WikiParser('https://en.wikipedia.org/wiki/List_of_astronauts_by_name')
+#res = x.getSubElementsByAttribute('li', '', '<span class="flagicon">', 'a', 'title')
+#print(res)
