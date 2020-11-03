@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from apidata.astroApireader import issDataReader
-from parser.wikiParser import WikiParser
+from parserdata.wikiParser import WikiParser
 
 class issCrew():
     """ Iss crew members by country """

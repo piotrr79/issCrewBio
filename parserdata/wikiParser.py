@@ -1,4 +1,4 @@
-from parser.mainParser import BaseParser
+from parserdata.parser import BaseParser
 
 class WikiParser(BaseParser):
     """ Wikipedia lists parser """
