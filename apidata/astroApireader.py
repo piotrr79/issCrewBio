@@ -14,7 +14,7 @@ class issDataReader(BaseApiReader):
             raise Exception('Api did not return valid response')
         response = []
         if 'people' in astros:
-            print(astros.get('people'))
+            #print(astros.get('people'))
             for astro in astros.get('people'):
                 response.append(astro.get('name')) 
         return response

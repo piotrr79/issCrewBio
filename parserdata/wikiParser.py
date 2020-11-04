@@ -9,12 +9,12 @@ class WikiParser(BaseParser):
         """ Get html subelements of selected html element, get attribute content (title, img, alt, etc) """
         response = []
         items = self.getElementByClass(element, classname)
-        for idx, item in enumerate(items):
+        for item in items:
             check = self.findInString(item, needle)
             if check != -1:
                 subitems = self.getElementByName(item, subelement)
                 subresponse = []
-                for idx, subitem in enumerate(subitems):
+                for subitem in subitems:
                     result = self.getAttribute(subitem, attribute)
                     subresponse.append(result)
                 response.append(subresponse)
