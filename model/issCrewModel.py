@@ -12,7 +12,8 @@ class issCrew():
     """ Iss crew members by country """
     def __init__(self):
         #pass
-        self.parserUrl = config('URL')
+        self.firstParserUrl = config('FIRST_URL')
+        self.secondParserUrl = config('SECOND_URL')
         self.element = config('ELEMENT')
         self.classname = config('CLASS_NAME')
         self.needle = config('NEEDLE')
@@ -21,10 +22,15 @@ class issCrew():
         self.apiUrl = config('API_URL')
     
     def getAllAstros(self):
-        """ Get astronauts list by name from Wiki """
-        parser = WikiParser(self.parserUrl)
+        """ Get astronauts list by name from Wiki list by name """
+        parser = WikiParser(self.firstParserUrl)
         return parser.getSubElementsByAttribute(self.element, self.classname, self.needle, self.subelement, self.attribute)
 
+    def getAllAstrosByName(self):
+        """ Get astronauts list by name from Wiki travelers by name """
+        parser = WikiParser(self.secondParserUrl)
+        return parser.getSubElementsByAttribute(self.element, self.classname, self.needle, self.subelement, self.attribute)
+    
     def getCurrentCrew(self):
         """ Get ISS crew """
         crew = issDataReader(self.apiUrl)
@@ -33,7 +39,7 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country """
-        astros = self.getAllAstros()
+        astros = self.getAllAstrosByName()
         crew = self.getCurrentCrew()
         # Switch list to dictionary
         for astro in astros:
@@ -49,9 +55,11 @@ class issCrew():
         return crew
 
 x = issCrew()
-#astro = x.getAllAstros()
+#astro1 = x.getAllAstros()
+astro2 = x.getAllAstrosByName()
 #crew = x.getCurrentCrew()
 match = x.matchCrewWithAstros()
-#print(astro)
+#print(astro1)
+print(astro2)
 #print(crew)
 print(match)
