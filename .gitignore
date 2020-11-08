@@ -1,4 +1,5 @@
 .sonarlint
+.env
 apidata/__pycache__
 parser/__pycache__
 parser/.sonarlint

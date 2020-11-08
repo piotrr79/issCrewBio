@@ -11,12 +11,18 @@ from parserdata.wikiParser import WikiParser
 class issCrew():
     """ Iss crew members by country """
     def __init__(self):
-        #pass
-        self.parserUrls = config('PASER_URLS')
-        self.apiUrl = config('API_URL')
-        self.listDefinition = config('LIST_DEFINITION')
-        self.tableDefinition = config('TABLE_DEFINITION')
-        
+        # @ToDo - move to class EnvReader
+        if os.environ.get('PASER_URLS') is not None:   
+            self.parserUrls = os.environ['PASER_URLS']
+            self.apiUrl = os.environ['API_URL']
+            self.listDefinition = os.environ['LIST_DEFINITION']
+            self.tableDefinition = os.environ['TABLE_DEFINITION']
+        else:
+            self.parserUrls = config('PASER_URLS')
+            self.apiUrl = config('API_URL')
+            self.listDefinition = config('LIST_DEFINITION')
+            self.tableDefinition = config('TABLE_DEFINITION')
+            
     def getArgs(self):
         liElements = self.listDefinition.split(',')
         # @ToDo - improve tdElements definition
