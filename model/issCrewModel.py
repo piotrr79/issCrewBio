@@ -12,26 +12,29 @@ class issCrew():
     """ Iss crew members by country """
     def __init__(self):
         #pass
-        self.firstParserUrl = config('FIRST_URL')
-        self.secondParserUrl = config('SECOND_URL')
-        self.thirdParserUrl = config('THIRD_URL')
         self.parserUrls = config('PASER_URLS')
-        self.element = config('ELEMENT')
-        self.classname = config('CLASS_NAME')
-        self.needle = config('NEEDLE')
-        self.subelement = config('SUBELEMENT')
-        self.attribute = config('ATTRIBUTE')
         self.apiUrl = config('API_URL')
-
+        self.listDefinition = config('LIST_DEFINITION')
+        self.tableDefinition = config('TABLE_DEFINITION')
+        
+    def getArgs(self):
+        liElements = self.listDefinition.split(',')
+        # @ToDo - improve tdElements definition
+        tdElements = self.tableDefinition.split(',')
+        return (liElements, tdElements)
+    
     def getAstrosParserData(self):
         """ Get astronauts list from Wiki list by name """
         urls = self.parserUrls.split(',')
         response = {}
         for idx, url in enumerate(urls):
             parser = WikiParser(url)
-            # @ToDo - extend iteration to accept results from different parsers (eg parsing by td not li)
-            subresponse = parser.getSubElementsByAttribute(self.element, self.classname, self.needle, self.subelement, self.attribute)
-            response[idx] = subresponse
+            # parse every page in loop by elements definition
+            prseDef= self.getArgs()
+            for args in prseDef:
+                subresponse = parser.getSubElementsByAttribute(*args)
+                response[idx] = subresponse
+
         return response
     
     def getCurrentCrew(self):
