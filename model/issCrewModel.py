@@ -38,6 +38,7 @@ class issCrew():
             # parse every page in loop by elements definition
             prseDef= self.getArgs()
             for args in prseDef:
+                # @ToDo - add method getElementsByName() to WikiParser and add get text between those elments
                 subresponse = parser.getSubElementsByAttribute(*args)
                 response[idx] = subresponse
 
