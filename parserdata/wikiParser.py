@@ -10,8 +10,10 @@ class WikiParser(BaseParser):
         response = []
         items = self.getElementByClass(element, classname)
         for item in items:
+            """ Check for search string / needle (element name, class, etc) in item """
             check = self.findInString(item, needle)
             if check != -1:
+                """ Get subitems if needle found """
                 subitems = self.getElementByName(item, subelement)
                 subresponse = []
                 for subitem in subitems:
