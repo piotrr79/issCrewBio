@@ -12,22 +12,22 @@ class issCrew():
     """ Iss crew members by country """
     def __init__(self):
         # @ToDo - move to class EnvReader
-        if os.environ.get('PASER_URLS') is not None:   
-            self.parserUrls = os.environ['PASER_URLS']
+        if os.environ.get('PARSER_URLS') is not None:   
+            self.parserUrls = os.environ['PARSER_URLS']
             self.apiUrl = os.environ['API_URL']
-            self.listDefinition = os.environ['LIST_DEFINITION']
-            self.tableDefinition = os.environ['TABLE_DEFINITION']
+            self.elementsDefinitions = os.environ['ELEMENTS_DEFINITIONS']
         else:
-            self.parserUrls = config('PASER_URLS')
+            self.parserUrls = config('PARSER_URLS')
             self.apiUrl = config('API_URL')
-            self.listDefinition = config('LIST_DEFINITION')
-            self.tableDefinition = config('TABLE_DEFINITION')
+            self.elementsDefinitions = config('ELEMENTS_DEFINITIONS')
             
     def getArgs(self):
-        liElements = self.listDefinition.split(',')
-        # @ToDo - improve tdElements definition
-        tdElements = self.tableDefinition.split(',')
-        return (liElements, tdElements)
+        """ Prepare list of elements to parse url against """
+        response = []
+        elements = self.elementsDefinitions.split('#')
+        for element in elements:
+            response.append(element.split(','))
+        return response
     
     def getAstrosParserData(self):
         """ Get astronauts list from Wiki list by name """
@@ -35,13 +35,10 @@ class issCrew():
         response = {}
         for idx, url in enumerate(urls):
             parser = WikiParser(url)
-            # parse every page in loop by elements definition
             prseDef= self.getArgs()
             for args in prseDef:
-                # @ToDo - add method getElementsByName() to WikiParser and add get text between those elments
-                subresponse = parser.getSubElementsByAttribute(*args)
+                subresponse = parser.getSubElementsContnent(*args)
                 response[idx] = subresponse
-
         return response
     
     def getCurrentCrew(self):
@@ -52,8 +49,9 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
-        astros = self.getAstrosParserData()      
-        crew = self.getCurrentCrew()    
+        astros = self.getAstrosParserData()             
+        crew = self.getCurrentCrew()  
+        # Set final response  
         response = {} 
         for key, astroArray in astros.items():
             for astroItem in astroArray:
@@ -66,14 +64,6 @@ class issCrew():
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
                        crew[item] = astroItem
-            # Push response (crew) from each iteration to final repsonse with key
+            # Push response (crew) from each iteration to final response with key
             response[key] = crew
         return response
-
-x = issCrew()
-#astro = x.getAstrosParserData()
-#crew = x.getCurrentCrew()
-match = x.matchCrewWithAstros()
-#print(astro)
-#print(crew)
-print(match)
