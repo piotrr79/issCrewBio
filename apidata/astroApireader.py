@@ -18,10 +18,3 @@ class issDataReader(BaseApiReader):
             for astro in astros.get('people'):
                 response.append(astro.get('name')) 
         return response
-
-    
-#x = issDataReader('http://api.open-notify.org/astros.json')
-#res = x.getAstroData()
-#print(res)
-#print(res.status_code)
-#print(res.json())

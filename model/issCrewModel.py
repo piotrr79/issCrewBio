@@ -37,8 +37,7 @@ class issCrew():
             parser = WikiParser(url)
             prseDef= self.getArgs()
             for args in prseDef:
-                subresponse = parser.getSubElementsContnent(*args)
-                response[idx] = subresponse
+                response[idx] = parser.getSubElementsContnent(*args)            
         return response
     
     def getCurrentCrew(self):
@@ -49,7 +48,7 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
-        astros = self.getAstrosParserData()             
+        astros = self.getAstrosParserData()       
         crew = self.getCurrentCrew()  
         # Set final response  
         response = {} 

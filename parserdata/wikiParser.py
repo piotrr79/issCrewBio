@@ -14,7 +14,7 @@ class WikiParser(BaseParser):
             check = self.findInString(item, needle)
             if check != -1:
                 """ Get subitems if needle found """
-                subitems = self.getElementByName(item, subelement)
+                subitems = self.getElementByName(item, subelement)                
                 subresponse = []
                 """ If attribute is set get atribute content, if not get text between elements """
                 for subitem in subitems:
@@ -22,6 +22,6 @@ class WikiParser(BaseParser):
                         result = self.getAttribute(subitem, attribute)
                     else:
                         result = self.getText(subitem)
-                subresponse.append(result)
-
+                    subresponse.append(result)
+                response.append(subresponse)
         return response

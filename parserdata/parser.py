@@ -19,11 +19,11 @@ class BaseParser:
     def getElementByClass(self, element, classname):
         """ Get html element by name and class """
         return self.getSoup().findAll(element, {"class": classname})
-
+    
     def getElementByName(self, soup, htmlelement):
         """ Get html element by name and class from provided html parsed by BeautifulSoup """
         return soup.findAll(htmlelement, {"class": ""})
-
+    
     def findInString(self, element, needle):
         """ Find needle in provided element (BeautifulSoup onbject) """
         return str(element).find(needle)
