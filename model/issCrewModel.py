@@ -52,17 +52,25 @@ class issCrew():
         crew = self.getCurrentCrew()  
         # Set final response  
         response = {} 
+        subresponse = crew
         for key, astroArray in astros.items():
             for astroItem in astroArray:
                 # Join astro array to string
-                astroString = ' '.join([str(elem) for elem in astroItem])           
+                astroString = ' '.join([str(elem) for elem in astroItem])      
+                subresponse = {}  
                 for item in crew:
                     # Extract surname (last part of string after last whitespace)
                     surname = (item.split(' ')[-1]).strip()                   
                     # Check if surname exist in string
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
+                       # @ToDo - fix. Overwrites result from previous iteration
                        crew[item] = astroItem
+                       #subresponse[item] = astroItem
+                       #print(astroItem)
+                       #subresponse[item] = astroItem
             # Push response (crew) from each iteration to final response with key
             response[key] = crew
+            #print(response)
+            #response[key] = subresponse
         return response

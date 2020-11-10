@@ -27,11 +27,11 @@ class BaseParser:
     def findInString(self, element, needle):
         """ Find needle in provided element (BeautifulSoup onbject) """
         return str(element).find(needle)
-
+    
     def getText(self, element):
         """ Get text from provided elemenet """
         return element.get_text()
-
+    
     def getAttribute(self, element, attribute):
         """ Get content of provided attribute (title, alt) for given elelement """
         return element.get(attribute)
