@@ -50,9 +50,6 @@ class issCrew():
         """ Match ISS crew members with country and otjer available data """
         astros = self.getAstrosParserData()             
         crew = self.getCurrentCrew()        
-        # Set final response  
-        response = {} 
-        subresponse = {}
         # Astros contains data from several urls, itereate over all of them
         for key, astroArray in astros.items():
             # Itarate over astro data form single url (astroArray)
@@ -66,8 +63,13 @@ class issCrew():
                     # Check if surname exist in string
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
-                        # @ToDo - fix. Overwrites result from previous iteration
-                        crew[item] = astroItem
-            response[key] = crew
-            
-        return response
+                        # Get old value from crew dictionary
+                        oldVal = crew[item]
+                        # If oldVal is empty set astroItem as value
+                        if not oldVal:
+                            crew[item] = astroItem
+                        crew[item] = (oldVal,  astroItem)
+                        # Merge oldVal with astroItem and remove duplicates from merged lists
+                        # crew[item] = list(set(oldVal) | set(astroItem))
+                        
+        return crew
