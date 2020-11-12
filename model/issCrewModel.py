@@ -48,29 +48,26 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
-        astros = self.getAstrosParserData()       
-        crew = self.getCurrentCrew()  
+        astros = self.getAstrosParserData()             
+        crew = self.getCurrentCrew()        
         # Set final response  
         response = {} 
-        subresponse = crew
+        subresponse = {}
+        # Astros contains data from several urls, itereate over all of them
         for key, astroArray in astros.items():
+            # Itarate over astro data form single url (astroArray)
             for astroItem in astroArray:
                 # Join astro array to string
                 astroString = ' '.join([str(elem) for elem in astroItem])      
-                subresponse = {}  
+                # Check if astroArray item contains surnames from crew data
                 for item in crew:
                     # Extract surname (last part of string after last whitespace)
                     surname = (item.split(' ')[-1]).strip()                   
                     # Check if surname exist in string
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
-                       # @ToDo - fix. Overwrites result from previous iteration
-                       crew[item] = astroItem
-                       #subresponse[item] = astroItem
-                       #print(astroItem)
-                       #subresponse[item] = astroItem
-            # Push response (crew) from each iteration to final response with key
+                        # @ToDo - fix. Overwrites result from previous iteration
+                        crew[item] = astroItem
             response[key] = crew
-            #print(response)
-            #response[key] = subresponse
+            
         return response
