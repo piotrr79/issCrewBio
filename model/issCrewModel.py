@@ -39,7 +39,7 @@ class issCrew():
             prseDef= self.getArgs()
             for key, args in enumerate(prseDef):
                 # Pass each result for *args value to subresponse with key 
-                subresponse.append(parser.getSubElementsContnent(*args))    
+                subresponse.append(parser.getSubElementsContnent(*args))   
             # Pass subresponse for each url to response with idx
             response[idx] = subresponse
         return response
@@ -53,27 +53,29 @@ class issCrew():
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
         astros = self.getAstrosParserData()     
-        crew = self.getCurrentCrew()        
+        crew = self.getCurrentCrew()  
+        # @ToDo - astros data are constructed from dictionaries of list with sublist
+        # @ToDo - simplify accessing nested dictionary with nested for loops
         # Astros contains data from several urls, itereate over all of them
         for key, astroArray in astros.items():          
             # Itarate over astro data form single url (astroArray)
-            for astroItem in astroArray:
-                # Join astro array to string
-                astroString = ' '.join([str(elem) for elem in astroItem])      
-                # Check if astroArray item contains surnames from crew data
-                for item in crew:
-                    # Extract surname (last part of string after last whitespace)
-                    surname = (item.split(' ')[-1]).strip()                   
-                    # Check if surname exist in string
-                    regmatch = re.search(surname, astroString)
-                    if regmatch != None:
-                        print(regmatch)
-                        # Get old value from crew dictionary
-                        oldVal = crew[item]                                          
-                        # If oldVal is empty set astroItem as oldVal (oldVal must be a type of list)
-                        if not oldVal:
-                            oldVal = astroItem
-                        # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
-                        # crew[item] = list(dict.fromkeys(oldVal + astroItem))
-                        crew[item] = oldVal + astroItem
+            for astroItem in astroArray:                  
+                for subAstroItem in astroItem:                    
+                    for element in subAstroItem:
+                        astroString = ' '.join(map(str, element))
+                        # Check if astroArray item contains surnames from crew data
+                        for item in crew:
+                            # Extract surname (last part of string after last whitespace)
+                            surname = (item.split(' ')[-1]).strip()             
+                            # Check if surname exist in string
+                            regmatch = re.search(surname, astroString)                                
+                            if regmatch != None:
+                                # Get old value from crew dictionary 
+                                oldVal = crew[item]                                 
+                                # If oldVal is empty set astroItem as oldVal (oldVal must be a type of list)
+                                if not oldVal:
+                                    oldVal = subAstroItem
+                                # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
+                                # crew[item] = list(dict.fromkeys(oldVal + subAstroItem))
+                                crew[item] = oldVal + subAstroItem
         return crew
