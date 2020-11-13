@@ -70,5 +70,4 @@ class issCrew():
                             oldVal = astroItem
                         # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
                         crew[item] = list(dict.fromkeys(oldVal + astroItem))
-                        
         return crew
