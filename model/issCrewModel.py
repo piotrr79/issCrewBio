@@ -78,4 +78,14 @@ class issCrew():
                                 # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
                                 # crew[item] = list(dict.fromkeys(oldVal + subAstroItem))
                                 crew[item] = oldVal + subAstroItem
-        return crew
+                              
+        # Remove duplicates
+        response = {}
+        subresponse = []
+        for key, item in crew.items():
+            for subitem in item:      
+                if subitem not in subresponse:
+                    subresponse.append(subitem)
+        response[key] = subresponse
+
+        return response
