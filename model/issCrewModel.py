@@ -33,13 +33,13 @@ class issCrew():
         """ Get astronauts list from Wiki list by name """
         urls = self.parserUrls.split(',')       
         response = {}
-        subresponse = {}
+        subresponse = []
         for idx, url in enumerate(urls):
             parser = WikiParser(url)           
             prseDef= self.getArgs()
             for key, args in enumerate(prseDef):
-                # Pass each result for *args value to subresponse with key
-                subresponse[key] = parser.getSubElementsContnent(*args)        
+                # Pass each result for *args value to subresponse with key 
+                subresponse.append(parser.getSubElementsContnent(*args))    
             # Pass subresponse for each url to response with idx
             response[idx] = subresponse
         return response
@@ -52,11 +52,10 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
-        astros = self.getAstrosParserData()
-        #print(astros)         
+        astros = self.getAstrosParserData()     
         crew = self.getCurrentCrew()        
         # Astros contains data from several urls, itereate over all of them
-        for key, astroArray in astros.items():
+        for key, astroArray in astros.items():          
             # Itarate over astro data form single url (astroArray)
             for astroItem in astroArray:
                 # Join astro array to string
@@ -68,11 +67,13 @@ class issCrew():
                     # Check if surname exist in string
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
+                        print(regmatch)
                         # Get old value from crew dictionary
                         oldVal = crew[item]                                          
                         # If oldVal is empty set astroItem as oldVal (oldVal must be a type of list)
                         if not oldVal:
                             oldVal = astroItem
                         # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
-                        crew[item] = list(dict.fromkeys(oldVal + astroItem))
+                        # crew[item] = list(dict.fromkeys(oldVal + astroItem))
+                        crew[item] = oldVal + astroItem
         return crew
