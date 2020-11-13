@@ -24,20 +24,24 @@ class issCrew():
     def getArgs(self):
         """ Prepare list of elements to parse url against """
         response = []
-        elements = self.elementsDefinitions.split('#')
+        elements = self.elementsDefinitions.split('#')       
         for element in elements:
-            response.append(element.split(','))
+            response.append(element.split(','))           
         return response
     
     def getAstrosParserData(self):
         """ Get astronauts list from Wiki list by name """
-        urls = self.parserUrls.split(',')
+        urls = self.parserUrls.split(',')       
         response = {}
+        subresponse = {}
         for idx, url in enumerate(urls):
-            parser = WikiParser(url)
+            parser = WikiParser(url)           
             prseDef= self.getArgs()
-            for args in prseDef:
-                response[idx] = parser.getSubElementsContnent(*args)            
+            for key, args in enumerate(prseDef):
+                # Pass each result for *args value to subresponse with key
+                subresponse[key] = parser.getSubElementsContnent(*args)        
+            # Pass subresponse for each url to response with idx
+            response[idx] = subresponse
         return response
     
     def getCurrentCrew(self):
@@ -48,7 +52,8 @@ class issCrew():
         
     def matchCrewWithAstros(self):
         """ Match ISS crew members with country and otjer available data """
-        astros = self.getAstrosParserData()             
+        astros = self.getAstrosParserData()
+        #print(astros)         
         crew = self.getCurrentCrew()        
         # Astros contains data from several urls, itereate over all of them
         for key, astroArray in astros.items():
@@ -64,7 +69,7 @@ class issCrew():
                     regmatch = re.search(surname, astroString)
                     if regmatch != None:
                         # Get old value from crew dictionary
-                        oldVal = crew[item]                    
+                        oldVal = crew[item]                                          
                         # If oldVal is empty set astroItem as oldVal (oldVal must be a type of list)
                         if not oldVal:
                             oldVal = astroItem

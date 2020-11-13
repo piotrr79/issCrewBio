@@ -12,16 +12,18 @@ class WikiParser(BaseParser):
         for item in items:
             """ Check for search string / needle (element name, class, etc) in item """
             check = self.findInString(item, needle)
+            subresponse = []
             if check != -1:
                 """ Get subitems if needle found """
                 subitems = self.getElementByName(item, subelement)                
-                subresponse = []
+                result = []
                 """ If attribute is set get atribute content, if not get text between elements """
                 for subitem in subitems:
+                    # Get attribute value, if no attribute get subelements text
                     if attribute:
-                        result = self.getAttribute(subitem, attribute)
+                        result.append(self.getAttribute(subitem, attribute))
                     else:
-                        result = self.getText(subitem)
-                    subresponse.append(result)
-                response.append(subresponse)
+                        result.append(self.getText(subitem))
+                subresponse.append(result)
+            response.append(subresponse)
         return response
