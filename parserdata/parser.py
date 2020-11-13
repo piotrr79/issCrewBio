@@ -30,7 +30,7 @@ class BaseParser:
     
     def getText(self, element):
         """ Get text from provided elemenet """
-        return element.get_text()
+        return element.get_text(strip=True)
     
     def getAttribute(self, element, attribute):
         """ Get content of provided attribute (title, alt) for given elelement """
