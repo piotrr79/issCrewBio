@@ -71,21 +71,10 @@ class issCrew():
                             regmatch = re.search(surname, astroString)                                
                             if regmatch != None:
                                 # Get old value from crew dictionary 
-                                oldVal = crew[item]                                 
+                                oldVal = crew[item]                             
                                 # If oldVal is empty set astroItem as oldVal (oldVal must be a type of list)
                                 if not oldVal:
                                     oldVal = subAstroItem
-                                # Remove duplicates from new list (oldVal + astroItem) and set it as crew[item]
-                                # crew[item] = list(dict.fromkeys(oldVal + subAstroItem))
                                 crew[item] = oldVal + subAstroItem
-                              
-        # Remove duplicates
-        response = {}
-        subresponse = []
-        for key, item in crew.items():
-            for subitem in item:      
-                if subitem not in subresponse:
-                    subresponse.append(subitem)
-        response[key] = subresponse
-
-        return response
+  
+        return crew
