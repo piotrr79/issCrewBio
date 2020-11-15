@@ -77,4 +77,11 @@ class issCrew():
                                     oldVal = subAstroItem
                                 crew[item] = oldVal + subAstroItem
   
-        return crew
+        # Remove duplicates. @ToDo - improve 
+        response = []
+        for key, item in crew.items():
+            for subitem in item:      
+                if subitem not in subresponse:
+                    response.append(subitem)
+
+        return response
