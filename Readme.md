@@ -9,6 +9,6 @@ Rename env.dist to .env or set env vars
 ## Run form console:
 From project directory run `python3 command.py`
 
-## Run Api
-From /api directory run api.py and go to `http://localhost:5000/`
+## Run Api from Http
+From project directory run `python3 api/api.py` and go to `http://localhost:5000/`
 Api generate crew memenrs bios under; `http://localhost:5000/iss-crew-bio`
